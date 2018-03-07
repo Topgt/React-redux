@@ -3,18 +3,25 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
+
+import rootSaga from './saga'
 import registerServiceWorker from './registerServiceWorker';
 
 const reducer = (state={ number:0 }, action) => {
   if ('add' === action.type)
-    return {number: state.number + 1};
+    return {number: state.number + action.number};
+  else if ('click')
+    return {...state}
 }
-const middleware = [createSagaMiddleware()]
+
+const sagaMiddleware = createSagaMiddleware()
+const middleware = [sagaMiddleware]
 
 const store = createStore(
   reducer,
   applyMiddleware(...middleware)
 )
+sagaMiddleware.run(rootSaga)
 
 function TtRedux(props) {
   return (
@@ -33,7 +40,7 @@ const mapStateToProps = ( state={ number:0 } ) => {
 
 const mapDisPatchToProps = (dispatch) => {
   return {
-    handler: e => dispatch({type: 'add'})
+    handler: e => dispatch({type: 'click'})
   }
 }
 
