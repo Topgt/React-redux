@@ -1,5 +1,8 @@
-export default function() {
+export default function(status) {
   return new Promise((resolve, reject) => {
-    setTimeout(()=>resolve(100), 3*1000)
+    if ('success' === status)
+      setTimeout(()=>resolve(100), 3*1000)
+    else if ('error' === status)
+      setTimeout(()=>reject(-100), 3*1000)
   })
 }
