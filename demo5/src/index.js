@@ -19,15 +19,11 @@ const store = createStore(
     reducer,
     routerReducer
   ),
+  initStore,
   applyMiddleware(
     middleware
   )
 )
-
-
-
-
-
 
 ReactDOM.render(
   <Provider store={store} >
